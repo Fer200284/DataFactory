@@ -1,0 +1,45 @@
+{
+	"name": "DIM_MEDICO_DW",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_PACIENCARE_DESTINO",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "idmedicoDW",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "idmedicosOLTP",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "nombre",
+				"type": "nvarchar"
+			},
+			{
+				"name": "apellidos",
+				"type": "nvarchar"
+			},
+			{
+				"name": "codigo_minsa",
+				"type": "nvarchar"
+			},
+			{
+				"name": "idespecialidadOLTP",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Dim_Medico"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

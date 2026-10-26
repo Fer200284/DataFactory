@@ -1,0 +1,13 @@
+{
+	"name": "Origenoltp",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_PACIENCARE_ORIGEN",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
