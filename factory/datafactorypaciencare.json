@@ -1,0 +1,15 @@
+{
+	"name": "datafactorypaciencare",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d505c2df-c0fd-40c5-8b63-9a13952311db",
+		"tenantId": "e47646fe-da27-4518-8436-5f8b158ba127"
+	}
+}
