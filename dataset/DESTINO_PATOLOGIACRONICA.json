@@ -1,0 +1,31 @@
+{
+	"name": "DESTINO_PATOLOGIACRONICA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_PACIENCARE_DESTNO",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "patologia_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_patologia_origen",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "nombre_patologia",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Dim_Patologia"
+		}
+	}
+}

@@ -1,0 +1,40 @@
+{
+	"name": "DESTINO_SECTOR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_PACIENCARE_DESTNO",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "sector_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_sector_origen",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "numero_sector",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "nombre_sector",
+				"type": "nvarchar"
+			},
+			{
+				"name": "zona_procedencia",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Dim_Sector"
+		}
+	}
+}

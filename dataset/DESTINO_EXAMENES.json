@@ -1,0 +1,39 @@
+{
+	"name": "DESTINO_EXAMENES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_PACIENCARE_DESTNO",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "examen_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_examen_origen",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "nombre_examen",
+				"type": "nvarchar"
+			},
+			{
+				"name": "unidad_medida",
+				"type": "nvarchar"
+			},
+			{
+				"name": "valor_referencia",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Dim_Examen_Laboratorio"
+		}
+	}
+}

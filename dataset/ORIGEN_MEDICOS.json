@@ -1,0 +1,52 @@
+{
+	"name": "ORIGEN_MEDICOS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_PACIENCARE_ORIGEN",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "nombre",
+				"type": "nvarchar"
+			},
+			{
+				"name": "apellidos",
+				"type": "nvarchar"
+			},
+			{
+				"name": "celular",
+				"type": "nvarchar"
+			},
+			{
+				"name": "codigo_minsa",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fecha_creacion",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "estado",
+				"type": "bit"
+			},
+			{
+				"name": "IdEspecialidad",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Medicos"
+		}
+	}
+}

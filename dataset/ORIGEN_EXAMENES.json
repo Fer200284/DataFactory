@@ -1,0 +1,43 @@
+{
+	"name": "ORIGEN_EXAMENES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_PACIENCARE_ORIGEN",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Nombre_examen",
+				"type": "nvarchar"
+			},
+			{
+				"name": "UnidadMedida",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ValorReferencia",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FechaCreacion",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "Estado",
+				"type": "bit"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Examenes_Laboratorio"
+		}
+	}
+}

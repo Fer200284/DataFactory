@@ -1,0 +1,44 @@
+{
+	"name": "ORIGEN_SECTOR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_PACIENCARE_ORIGEN",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "NombreSector",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NumeroSector",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ZonaProcedencia",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FechaCreacion",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "Estado",
+				"type": "bit"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Sector"
+		}
+	}
+}

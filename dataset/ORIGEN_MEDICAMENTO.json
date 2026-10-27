@@ -1,0 +1,48 @@
+{
+	"name": "ORIGEN_MEDICAMENTO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_PACIENCARE_ORIGEN",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Nombre_Medicamento",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Presentacion",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Concentracion",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FechaCreacion",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "Estado",
+				"type": "bit"
+			},
+			{
+				"name": "IdCategoriaMedicamento",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Medicamentos"
+		}
+	}
+}

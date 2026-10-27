@@ -1,0 +1,44 @@
+{
+	"name": "DESTINO_PACIENTE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_PACIENCARE_DESTNO",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "paciente_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_paciente_origen",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "nombre_completo",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sexo",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fecha_nacimiento",
+				"type": "date"
+			},
+			{
+				"name": "sector_key",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Dim_Paciente"
+		}
+	}
+}

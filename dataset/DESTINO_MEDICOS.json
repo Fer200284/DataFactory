@@ -1,0 +1,39 @@
+{
+	"name": "DESTINO_MEDICOS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_PACIENCARE_DESTNO",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "medico_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "id_medico_origen",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "nombre_completo",
+				"type": "nvarchar"
+			},
+			{
+				"name": "codigo_minsa",
+				"type": "nvarchar"
+			},
+			{
+				"name": "nombre_especialidad",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Dim_Medico"
+		}
+	}
+}
