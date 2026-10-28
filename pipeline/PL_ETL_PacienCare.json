@@ -5,7 +5,16 @@
 			{
 				"name": "DIM_SECTOR",
 				"type": "Copy",
-				"dependsOn": [],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "DIM_TIEMPO",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -104,6 +113,8 @@
 			{
 				"name": "DIM_PACIENTE",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DIM_SECTOR",
@@ -210,6 +221,8 @@
 			{
 				"name": "DIM_PATOLOGIA",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DIM_PACIENTE",
@@ -292,6 +305,8 @@
 			{
 				"name": "DIM_MEDICO",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DIM_PATOLOGIA",
@@ -398,6 +413,8 @@
 			{
 				"name": "DIM_MEDICAMENTO",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DIM_MEDICO",
@@ -516,6 +533,8 @@
 			{
 				"name": "DIM_EXAMENES_DE_LABORATORIO",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DIM_MEDICAMENTO",
@@ -618,6 +637,34 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "DIM_TIEMPO",
+				"type": "Script",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "LS_PACIENCARE_DESTNO",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "NonQuery",
+							"text": "WITH Fechas AS\n(\n    SELECT CAST('2020-01-01' AS DATE) AS fecha\n\n    UNION ALL\n\n    SELECT DATEADD(DAY, 1, fecha)\n    FROM Fechas\n    WHERE fecha < '2035-12-31'\n)\n\nINSERT INTO dbo.DIM_TIEMPO\n(\n    tiempo_key,\n    fecha,\n    dia,\n    nombre_dia,\n    dia_semana_numero,\n    semana_anio,\n    mes,\n    nombre_mes,\n    trimestre,\n    semestre,\n    anio,\n    es_fin_semana\n)\nSELECT\n    CAST(FORMAT(fecha,'yyyyMMdd') AS INT) AS tiempo_key,\n    fecha,\n    DAY(fecha) AS dia,\n    DATENAME(WEEKDAY, fecha) AS nombre_dia,\n    DATEPART(WEEKDAY, fecha) AS dia_semana_numero,\n    DATEPART(WEEK, fecha) AS semana_anio,\n    MONTH(fecha) AS mes,\n    DATENAME(MONTH, fecha) AS nombre_mes,\n    DATEPART(QUARTER, fecha) AS trimestre,\n    CASE\n        WHEN MONTH(fecha) <= 6 THEN 1\n        ELSE 2\n    END AS semestre,\n    YEAR(fecha) AS anio,\n    CASE\n        WHEN DATEPART(WEEKDAY, fecha) IN (1,7) THEN 1\n        ELSE 0\n    END AS es_fin_semana\nFROM Fechas\nOPTION (MAXRECURSION 0);"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
 			}
 		],
 		"annotations": [],
