@@ -1,0 +1,15 @@
+{
+	"name": "paciencare-datafactory",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "northcentralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "67483a29-e956-4b30-94e9-84cb9b6d6af6",
+		"tenantId": "e47646fe-da27-4518-8436-5f8b158ba127"
+	}
+}
