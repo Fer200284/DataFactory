@@ -1,0 +1,65 @@
+{
+	"name": "destino_coleccion",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_PACIENCARE_DESTNO",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "varchar"
+			},
+			{
+				"name": "Id_encuesta",
+				"type": "varchar"
+			},
+			{
+				"name": "id_fecha",
+				"type": "varchar"
+			},
+			{
+				"name": "Id_paciente",
+				"type": "varchar"
+			},
+			{
+				"name": "id_patologia",
+				"type": "varchar"
+			},
+			{
+				"name": "puntuacion_general",
+				"type": "varchar"
+			},
+			{
+				"name": "score_atencion_medica",
+				"type": "varchar"
+			},
+			{
+				"name": "tiempo_espera_minutos",
+				"type": "varchar"
+			},
+			{
+				"name": "score_trato_personal",
+				"type": "varchar"
+			},
+			{
+				"name": "score_consulta_doctor",
+				"type": "varchar"
+			},
+			{
+				"name": "resolucion_dudas_val",
+				"type": "varchar"
+			},
+			{
+				"name": "comentatio",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "MONGODB_Temporal"
+		}
+	}
+}
