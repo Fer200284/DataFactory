@@ -1,0 +1,41 @@
+{
+	"name": "DESTINO_DIM_PACIENTE_PATOLOGIA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_DIMPaciente_Patologia",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_PacientePatologia",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ID_Paciente",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ID_Patologia",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "NOMBRE_PATOLOGIA",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_Paciente_Patologia"
+		}
+	}
+}

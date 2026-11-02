@@ -1,0 +1,43 @@
+{
+	"name": "DESTINO_DIM_MEDICAMENTO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_DIM_MEDICAMENTO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_MEDICAMENTO",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "NOMBRE_MEDICAMENTO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PRESENTACION",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CONCENTRACION",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CATEGORIA",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_MEDICAMENTO"
+		}
+	}
+}

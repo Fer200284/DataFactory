@@ -1,0 +1,44 @@
+{
+	"name": "ORIGEN_DIM_PACIENTEA_PATOLOGIA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "fecha_de_Diagnostico",
+				"type": "date"
+			},
+			{
+				"name": "Estado",
+				"type": "bit"
+			},
+			{
+				"name": "Observaciones",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Idpaciente",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "IDPatologiaCRonica",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Paciente_Patologia"
+		}
+	}
+}

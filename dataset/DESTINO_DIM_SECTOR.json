@@ -1,0 +1,35 @@
+{
+	"name": "DESTINO_DIM_SECTOR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_DIMSECTOR",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "IDSECTOR_OLTP",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "NOMBRE_SECTOR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ZONA_PROCEDENCIA",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_SECTOR"
+		}
+	}
+}

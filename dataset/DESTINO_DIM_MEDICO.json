@@ -1,0 +1,35 @@
+{
+	"name": "DESTINO_DIM_MEDICO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_DIMMEDICO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_MEDICO_OLTP",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "NOMBRE_COMPLETO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ESPECIALIDAD",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_MEDICO"
+		}
+	}
+}

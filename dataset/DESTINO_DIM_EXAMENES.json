@@ -1,0 +1,39 @@
+{
+	"name": "DESTINO_DIM_EXAMENES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_DIMEXAMENES",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_EXAMEN_OLTP",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "NOMBRE_EXAMEN",
+				"type": "nvarchar"
+			},
+			{
+				"name": "UNIDADMEDIDA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VALORREFERENCIA",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_EXAMENES"
+		}
+	}
+}
