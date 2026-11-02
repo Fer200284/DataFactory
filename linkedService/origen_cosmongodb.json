@@ -9,7 +9,7 @@
 			"account": "dbuser6oks5u",
 			"database": "paciencare_db",
 			"isServerVersionAbove32": true,
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDIxNTdDMEIxLTRGN0MtNDMxNy04NDMzLTREQTM5MzQxMEM3MF85ODAwNGMzNC1kMWVhLTQ5NmEtODM4Yy0wYjA1ZGM5MWM4YTciDQp9"
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDIxNTdDMEIxLTRGN0MtNDMxNy04NDMzLTREQTM5MzQxMEM3MF9iODYyMzYzYS1hMzU0LTQ0N2MtYjVmZS04MmFhYzk0NWQxYjYiDQp9"
 		},
 		"connectVia": {
 			"referenceName": "AutoResolveIntegrationRuntime",
