@@ -1,0 +1,38 @@
+{
+	"name": "SRC_STG_ENCUESTA",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ORIGEN_FACT_ENCUESTA",
+						"type": "DatasetReference"
+					},
+					"name": "ENCUESTA"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          ID_ENCUESTA as long,",
+				"          ID_FECHA as date,",
+				"          ID_PACIENTE as long,",
+				"          ID_PATOLOGIA as long,",
+				"          PUNTUACION_GENERAL as integer,",
+				"          SCORE_ATENCION_MEDICA as integer,",
+				"          TIEMPO_ESPERA_MINUTOS as integer,",
+				"          SCORE_TRATO_PERSONAL as integer,",
+				"          SCORE_CONSULTA_DOCTOR as integer,",
+				"          RESOLUCION_DUDAS_VAL as boolean,",
+				"          COMENTARIO as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ENCUESTA"
+			]
+		}
+	}
+}
