@@ -1,0 +1,203 @@
+{
+	"name": "PL_ETL_PACIENCARE",
+	"properties": {
+		"activities": [
+			{
+				"name": "DIM_TIEMPO",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SET LANGUAGE Spanish;\nSELECT DISTINCT\n    CAST(FechaHoraCita AS DATE) AS Fecha,\n    YEAR(FechaHoraCita) AS Anio,\n    MONTH(FechaHoraCita) AS Mes,\n    DATENAME(MONTH, FechaHoraCita) AS NombreMes,\n    DAY(FechaHoraCita) AS Dia,\n    DATENAME(WEEKDAY, FechaHoraCita) AS NombreDia,\n    DATEPART(WEEK, FechaHoraCita) AS Semana,\n    DATEPART(QUARTER, FechaHoraCita) AS Trimestre,\n    CASE\n        WHEN MONTH(FechaHoraCita) <= 6 THEN 1\n        ELSE 2\n    END AS Semestre\nFROM Citas",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "DELETE FROM DIM_TIEMPO;\n\nDBCC CHECKIDENT ('DIM_TIEMPO', RESEED, 0);",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Anio",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Anio",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Mes",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Mes",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "NombreMes",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "NombreMes",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Dia",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Dia",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "NombreDia",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "NombreDia",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Semana",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Semana",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Trimestre",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Trimestre",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Semestre",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Semestre",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Fecha",
+									"type": "Date",
+									"physicalType": "date"
+								},
+								"sink": {
+									"name": "Fecha",
+									"type": "Date",
+									"physicalType": "date"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ORIGEN_DIMENSION_TIEMPO",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DESTINO_DIM_TIEMPO",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "DIM_SECTOR",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "DIM_TIEMPO",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false
+				},
+				"outputs": [
+					{
+						"referenceName": "ORIGEN_DIM_SECTOR",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

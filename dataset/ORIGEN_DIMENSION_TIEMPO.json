@@ -1,0 +1,55 @@
+{
+	"name": "ORIGEN_DIMENSION_TIEMPO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "IdPaciente",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "IdMedico",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "FechaHoraCita",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "Estado",
+				"type": "varchar"
+			},
+			{
+				"name": "FechaAtencionReal",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "Observaciones",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FechaCreacion",
+				"type": "datetimeoffset",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Citas"
+		}
+	}
+}
