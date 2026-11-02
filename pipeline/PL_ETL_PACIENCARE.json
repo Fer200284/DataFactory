@@ -910,6 +910,8 @@
 			{
 				"name": "STG_ENCUESTA_PACIENTE",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DIM_PATOLOGIA",
@@ -1054,6 +1056,249 @@
 				"outputs": [
 					{
 						"referenceName": "STG_DESTINO_ENCUESTA_PACIENTE",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "DIM_COMENTARIO",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "STG_ENCUESTA_PACIENTE",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT DISTINCT\n       COMENTARIO\nFROM STG_ENCUESTA_PACIENTE\nWHERE COMENTARIO IS NOT NULL;",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "DELETE FROM DIM_COMENTARIO;\n\nDBCC CHECKIDENT ('DIM_COMENTARIO', RESEED, 0);",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "COMENTARIO",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "COMENTARIO",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ORIGEN_DIMENCION_COMENTARIO",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DESTINO_DIM_COMENTARIO",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "STG_ATENCIONES_MONGODB",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "DIM_COMENTARIO",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CosmosDbMongoDbApiSource",
+						"batchSize": 100
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "DELETE FROM STG_ATENCIONES_MONGO;",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['id_atencion']"
+								},
+								"sink": {
+									"name": "ID_ATENCION",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id_fecha']"
+								},
+								"sink": {
+									"name": "ID_FECHA",
+									"type": "Date"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id_paciente']"
+								},
+								"sink": {
+									"name": "ID_PACIENTE",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id_medico']"
+								},
+								"sink": {
+									"name": "ID_MEDICO",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id_patologia']"
+								},
+								"sink": {
+									"name": "ID_PATOLOGIA",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['asistio_val']"
+								},
+								"sink": {
+									"name": "ASISTIO_VAL",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['fecha_hora_llegada']"
+								},
+								"sink": {
+									"name": "FECHA_HORA_LLEGADA",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['fecha_hora_inicio_consulta']"
+								},
+								"sink": {
+									"name": "FECHA_HORA_INICIO_CONSULTA",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['fecha_hora_fin_consulta']"
+								},
+								"sink": {
+									"name": "FECHA_HORA_FIN_CONSULTA",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['tiempo_espera_real_minutos']"
+								},
+								"sink": {
+									"name": "TIEMPO_ESPERA_REAL_MINUTOS",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['duracion_consulta_minutos']"
+								},
+								"sink": {
+									"name": "DURACION_CONSULTA_MINUTOS",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['receto_medicamento_flag']"
+								},
+								"sink": {
+									"name": "RECETO_MEDICAMENTO_FLAG",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"path": "$['solicito_examen_flag']"
+								},
+								"sink": {
+									"name": "SOLICITO_EXAMEN_FLAG",
+									"type": "Boolean"
+								}
+							}
+						],
+						"collectionReference": ""
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "STG_ATENCIONES_COSMODB",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DESTINO_STGATENCION_MONGODB",
 						"type": "DatasetReference"
 					}
 				]

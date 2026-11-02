@@ -1,0 +1,26 @@
+{
+	"name": "DESTINO_DIM_COMENTARIO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_DIMCOMENTARIO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "COMENTARIO",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_COMENTARIO"
+		}
+	}
+}

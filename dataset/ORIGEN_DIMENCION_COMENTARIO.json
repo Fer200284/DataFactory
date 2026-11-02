@@ -1,0 +1,69 @@
+{
+	"name": "ORIGEN_DIMENCION_COMENTARIO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_ENCUESTA",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ID_FECHA",
+				"type": "date"
+			},
+			{
+				"name": "ID_PACIENTE",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ID_PATOLOGIA",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "PUNTUACION_GENERAL",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SCORE_ATENCION_MEDICA",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TIEMPO_ESPERA_MINUTOS",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SCORE_TRATO_PERSONAL",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SCORE_CONSULTA_DOCTOR",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "RESOLUCION_DUDAS_VAL",
+				"type": "bit"
+			},
+			{
+				"name": "COMENTARIO",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "STG_ENCUESTA_PACIENTE"
+		}
+	}
+}
