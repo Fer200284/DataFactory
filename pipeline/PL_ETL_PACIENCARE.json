@@ -938,7 +938,112 @@
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['id_encuesta']"
+								},
+								"sink": {
+									"name": "ID_ENCUESTA",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id_fecha']"
+								},
+								"sink": {
+									"name": "ID_FECHA",
+									"type": "Date"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id_paciente']"
+								},
+								"sink": {
+									"name": "ID_PACIENTE",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id_patologia']"
+								},
+								"sink": {
+									"name": "ID_PATOLOGIA",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "$['puntuacion_general']"
+								},
+								"sink": {
+									"name": "PUNTUACION_GENERAL",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['score_atencion_medica']"
+								},
+								"sink": {
+									"name": "SCORE_ATENCION_MEDICA",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['tiempo_espera_minutos']"
+								},
+								"sink": {
+									"name": "TIEMPO_ESPERA_MINUTOS",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['score_trato_personal']"
+								},
+								"sink": {
+									"name": "SCORE_TRATO_PERSONAL",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['score_consulta_doctor']"
+								},
+								"sink": {
+									"name": "SCORE_CONSULTA_DOCTOR",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['resolucion_dudas_val']"
+								},
+								"sink": {
+									"name": "RESOLUCION_DUDAS_VAL",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
+									"path": "$['comentario']"
+								},
+								"sink": {
+									"name": "COMENTARIO",
+									"type": "String"
+								}
+							}
+						],
+						"mapComplexValuesToString": false
+					}
 				},
 				"inputs": [
 					{
