@@ -1,0 +1,42 @@
+{
+	"name": "ORIGEN_RESULTADO_EXAMEN",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ValorResultado",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "Interpretacion",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FechaResultado",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "Id_Solicitud_Examen",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Resultado_Examen"
+		}
+	}
+}

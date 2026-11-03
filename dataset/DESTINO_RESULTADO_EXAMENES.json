@@ -1,0 +1,53 @@
+{
+	"name": "DESTINO_RESULTADO_EXAMENES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_FACT_RE",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_SOLICITUD_EXAMEN_OLTP",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "IdDIMTIEMPO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIMPACIENTE",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIMMEDICO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIMEXAMENES",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "VALOR_RESULTADO",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "FACT_RESULTADOS_EXAMENES"
+		}
+	}
+}

@@ -1,0 +1,41 @@
+{
+	"name": "LKsolicitudexamenesOLTP",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Indicaciones",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fecha_de_envio",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "IdAtencionCronico",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "IdExamen_de_Laboratorio",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Solicitud_examenes"
+		}
+	}
+}

@@ -1,0 +1,267 @@
+{
+	"name": "DF_ResultadoExamenes",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ORIGEN_RESULTADO_EXAMEN",
+						"type": "DatasetReference"
+					},
+					"name": "SRCRESULTADOSEXAMENES"
+				},
+				{
+					"dataset": {
+						"referenceName": "LKsolicitudexamenesOLTP",
+						"type": "DatasetReference"
+					},
+					"name": "SRsolicituddeexamenes"
+				},
+				{
+					"dataset": {
+						"referenceName": "ORIGEN_ATENCION_CRONICO",
+						"type": "DatasetReference"
+					},
+					"name": "SRCATENCION"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_PACIENTE_PATOLOGIA",
+						"type": "DatasetReference"
+					},
+					"name": "SRCPACIENTEPATOLOGIA"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_PACIENTE",
+						"type": "DatasetReference"
+					},
+					"name": "SRCPACIENTE"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_MEDICO",
+						"type": "DatasetReference"
+					},
+					"name": "SRCMEDICO"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_EXAMENES",
+						"type": "DatasetReference"
+					},
+					"name": "SRCEXAMENE"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_TIEMPO",
+						"type": "DatasetReference"
+					},
+					"name": "SRCTIEMPO"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DESTINO_RESULTADO_EXAMENES",
+						"type": "DatasetReference"
+					},
+					"name": "DESTINOFACRE"
+				}
+			],
+			"transformations": [
+				{
+					"name": "LKSSolicituExamenes"
+				},
+				{
+					"name": "LKATENCION"
+				},
+				{
+					"name": "LKPPacientePatologia"
+				},
+				{
+					"name": "LKPpaciente"
+				},
+				{
+					"name": "LKPDIMMEDICO"
+				},
+				{
+					"name": "LKPEXAMENES"
+				},
+				{
+					"name": "LKPDIMTIEMPO"
+				},
+				{
+					"name": "DRVFECHA"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as long,",
+				"          ValorResultado as decimal(10,2),",
+				"          Interpretacion as string,",
+				"          FechaResultado as string,",
+				"          Id_Solicitud_Examen as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCRESULTADOSEXAMENES",
+				"source(output(",
+				"          id as long,",
+				"          Indicaciones as string,",
+				"          fecha_de_envio as string,",
+				"          IdAtencionCronico as long,",
+				"          IdExamen_de_Laboratorio as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRsolicituddeexamenes",
+				"source(output(",
+				"          id as long,",
+				"          FechaAtencion as date,",
+				"          Peso as decimal(5,2),",
+				"          Talla as decimal(5,2),",
+				"          {PresionArterial Sitolica} as string,",
+				"          {PresionArterial Diastolica} as string,",
+				"          FechaProximaCita as date,",
+				"          Asistio as boolean,",
+				"          ConsultaEspecializada as boolean,",
+				"          Observaciones as string,",
+				"          FechaCreacion as string,",
+				"          IdMedico as long,",
+				"          IdPaciente_Patologia as long,",
+				"          FechaHoraLlega as string,",
+				"          FechaHoraInicio as string,",
+				"          FechaHoraFin as string,",
+				"          IdCita as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCATENCION",
+				"source(output(",
+				"          ID_DIMPaciente_Patologia as integer,",
+				"          ID_PacientePatologia as long,",
+				"          ID_Paciente as long,",
+				"          ID_Patologia as long,",
+				"          NOMBRE_PATOLOGIA as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCPACIENTEPATOLOGIA",
+				"source(output(",
+				"          ID_DIMPACIENTE as integer,",
+				"          ID_PACIENTE as long,",
+				"          NOMBRE_COMPLETO as string,",
+				"          FECHA_DE_NACIMIENTO as date,",
+				"          SEXO as string,",
+				"          BARRIO as string,",
+				"          IDSECTOR_OLTP as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCPACIENTE",
+				"source(output(",
+				"          ID_DIMMEDICO as integer,",
+				"          ID_MEDICO_OLTP as long,",
+				"          NOMBRE_COMPLETO as string,",
+				"          ESPECIALIDAD as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCMEDICO",
+				"source(output(",
+				"          ID_DIMEXAMENES as integer,",
+				"          ID_EXAMEN_OLTP as long,",
+				"          NOMBRE_EXAMEN as string,",
+				"          UNIDADMEDIDA as string,",
+				"          VALORREFERENCIA as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCEXAMENE",
+				"source(output(",
+				"          IdDIMTIEMPO as integer,",
+				"          Fecha as date,",
+				"          Anio as integer,",
+				"          Mes as integer,",
+				"          NombreMes as string,",
+				"          Dia as integer,",
+				"          NombreDia as string,",
+				"          Semana as integer,",
+				"          Trimestre as integer,",
+				"          Semestre as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCTIEMPO",
+				"SRCRESULTADOSEXAMENES, SRsolicituddeexamenes lookup(Id_Solicitud_Examen == SRsolicituddeexamenes@id,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKSSolicituExamenes",
+				"LKSSolicituExamenes, SRCATENCION lookup(IdAtencionCronico == SRCATENCION@id,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKATENCION",
+				"LKATENCION, SRCPACIENTEPATOLOGIA lookup(IdPaciente_Patologia == ID_PacientePatologia,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPPacientePatologia",
+				"LKPPacientePatologia, SRCPACIENTE lookup(SRCPACIENTEPATOLOGIA@ID_Paciente == SRCPACIENTE@ID_PACIENTE,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPpaciente",
+				"LKPpaciente, SRCMEDICO lookup(IdMedico == ID_MEDICO_OLTP,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPDIMMEDICO",
+				"LKPDIMMEDICO, SRCEXAMENE lookup(IdExamen_de_Laboratorio == ID_EXAMEN_OLTP,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPEXAMENES",
+				"DRVFECHA, SRCTIEMPO lookup(FechaResultadoDATE == Fecha,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPDIMTIEMPO",
+				"LKPEXAMENES derive(FechaResultadoDATE = toDate(FechaResultado)) ~> DRVFECHA",
+				"LKPDIMTIEMPO sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_FACT_RE as integer,",
+				"          ID_SOLICITUD_EXAMEN_OLTP as long,",
+				"          IdDIMTIEMPO as integer,",
+				"          ID_DIMPACIENTE as integer,",
+				"          ID_DIMMEDICO as integer,",
+				"          ID_DIMEXAMENES as integer,",
+				"          VALOR_RESULTADO as decimal(10,2)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          each(match(/* All input columns */ true()),",
+				"               /* Input name */ $$ = $$),",
+				"          ID_SOLICITUD_EXAMEN_OLTP = Id_Solicitud_Examen,",
+				"          IdDIMTIEMPO,",
+				"          ID_DIMPACIENTE,",
+				"          ID_DIMMEDICO,",
+				"          ID_DIMEXAMENES,",
+				"          VALOR_RESULTADO = ValorResultado",
+				"     )) ~> DESTINOFACRE"
+			]
+		}
+	}
+}
