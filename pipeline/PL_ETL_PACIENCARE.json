@@ -5,6 +5,8 @@
 			{
 				"name": "DIM_TIEMPO",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -17,7 +19,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT DISTINCT\n       Fecha,\n       YEAR(Fecha) AS Anio,\n       MONTH(Fecha) AS Mes,\n       DATENAME(MONTH, Fecha) AS NombreMes,\n       DAY(Fecha) AS Dia,\n       DATENAME(WEEKDAY, Fecha) AS NombreDia,\n       DATEPART(WEEK, Fecha) AS Semana,\n       DATEPART(QUARTER, Fecha) AS Trimestre,\n       CASE\n           WHEN MONTH(Fecha) <= 6 THEN 1\n           ELSE 2\n       END AS Semestre\nFROM\n(\n    SELECT CAST(FechaHoraCita AS DATE) AS Fecha\n    FROM Citas\n\n    UNION\n\n    SELECT ID_FECHA\n    FROM STG_ENCUESTA_PACIENTE\n\n    UNION\n\n    SELECT ID_FECHA\n    FROM STG_ATENCIONES_MONGO\n) F\nORDER BY Fecha;",
+						"sqlReaderQuery": "WITH Fechas AS\n(\n    SELECT CAST('2025-01-01' AS DATE) AS Fecha\n\n    UNION ALL\n\n    SELECT DATEADD(DAY, 1, Fecha)\n    FROM Fechas\n    WHERE Fecha < '2030-12-31'\n)\n\nSELECT\n    Fecha,\n    YEAR(Fecha) AS Anio,\n    MONTH(Fecha) AS Mes,\n    DATENAME(MONTH, Fecha) AS NombreMes,\n    DAY(Fecha) AS Dia,\n    DATENAME(WEEKDAY, Fecha) AS NombreDia,\n    DATEPART(WEEK, Fecha) AS Semana,\n    DATEPART(QUARTER, Fecha) AS Trimestre,\n    CASE\n        WHEN MONTH(Fecha) <= 6 THEN 1\n        ELSE 2\n    END AS Semestre\nFROM Fechas\nOPTION (MAXRECURSION 2200);",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},

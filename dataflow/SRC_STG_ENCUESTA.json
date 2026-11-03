@@ -17,12 +17,53 @@
 						"type": "DatasetReference"
 					},
 					"name": "SRCDIMTIEMPO"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_PACIENTE",
+						"type": "DatasetReference"
+					},
+					"name": "SRCDIMPACIENTE"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_PATOLOGIA",
+						"type": "DatasetReference"
+					},
+					"name": "SRCDIMPatologia"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_COMENTARIO",
+						"type": "DatasetReference"
+					},
+					"name": "SRCDIMCOMENTARIO"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "FACT_SASTIFACCION_DESTINO",
+						"type": "DatasetReference"
+					},
+					"name": "DESFACSASTIFACCION"
+				}
+			],
 			"transformations": [
 				{
 					"name": "DIMtiempo"
+				},
+				{
+					"name": "DIMPACIENTE"
+				},
+				{
+					"name": "DIMPATOLOGIA"
+				},
+				{
+					"name": "DIMCOMENTARIO"
+				},
+				{
+					"name": "DRVFACT"
 				}
 			],
 			"scriptLines": [
@@ -59,10 +100,94 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRCDIMTIEMPO",
+				"source(output(",
+				"          ID_DIMPACIENTE as integer,",
+				"          ID_PACIENTE as long,",
+				"          NOMBRE_COMPLETO as string,",
+				"          FECHA_DE_NACIMIENTO as date,",
+				"          SEXO as string,",
+				"          BARRIO as string,",
+				"          IDSECTOR_OLTP as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     batchSize: 0,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCDIMPACIENTE",
+				"source(output(",
+				"          ID_DIMPATOLOGIA as integer,",
+				"          ID_PATOLOGIA_OLTP as long,",
+				"          NOMBRE_PATOLOGIA as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCDIMPatologia",
+				"source(output(",
+				"          ID_DIMCOMENTARIO as integer,",
+				"          COMENTARIO as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCDIMCOMENTARIO",
 				"ENCUESTA, SRCDIMTIEMPO lookup(ID_FECHA == Fecha,",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> DIMtiempo"
+				"     broadcast: 'auto')~> DIMtiempo",
+				"DIMtiempo, SRCDIMPACIENTE lookup(ENCUESTA@ID_PACIENTE == SRCDIMPACIENTE@ID_PACIENTE,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> DIMPACIENTE",
+				"DIMPACIENTE, SRCDIMPatologia lookup(ID_PATOLOGIA == ID_PATOLOGIA_OLTP,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> DIMPATOLOGIA",
+				"DIMPATOLOGIA, SRCDIMCOMENTARIO lookup(ENCUESTA@COMENTARIO == SRCDIMCOMENTARIO@COMENTARIO,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> DIMCOMENTARIO",
+				"DIMCOMENTARIO derive(CANTIDAD_ENCUESTA = 1) ~> DRVFACT",
+				"DRVFACT sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_FACT_SATISFACCION as integer,",
+				"          IdDIMTIEMPO as integer,",
+				"          ID_DIMPACIENTE as integer,",
+				"          ID_DIMCOMENTARIO as integer,",
+				"          ID_ENCUESTA_MONGO as long,",
+				"          PUNTUACION_GENERAL as integer,",
+				"          SCORE_ATENCION_MEDICA as integer,",
+				"          TIEMPO_ESPERA_MINUTOS as integer,",
+				"          SCORE_TRATO_PERSONAL as integer,",
+				"          SCORE_CONSULTA_DOCTOR as integer,",
+				"          RESOLUCION_DUDAS_VAL as boolean,",
+				"          CANTIDAD_ENCUESTAS as integer,",
+				"          FECHA_CARGA as timestamp,",
+				"          ID_DIMPATOLOGIA as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          IdDIMTIEMPO,",
+				"          ID_DIMPACIENTE,",
+				"          ID_DIMCOMENTARIO,",
+				"          ID_ENCUESTA_MONGO = ID_ENCUESTA,",
+				"          PUNTUACION_GENERAL,",
+				"          SCORE_ATENCION_MEDICA,",
+				"          TIEMPO_ESPERA_MINUTOS,",
+				"          SCORE_TRATO_PERSONAL,",
+				"          SCORE_CONSULTA_DOCTOR,",
+				"          RESOLUCION_DUDAS_VAL,",
+				"          CANTIDAD_ENCUESTAS = CANTIDAD_ENCUESTA,",
+				"          ID_DIMPATOLOGIA",
+				"     )) ~> DESFACSASTIFACCION"
 			]
 		}
 	}

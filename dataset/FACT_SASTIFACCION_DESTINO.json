@@ -1,0 +1,87 @@
+{
+	"name": "FACT_SASTIFACCION_DESTINO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_FACT_SATISFACCION",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "IdDIMTIEMPO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIMPACIENTE",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIMCOMENTARIO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_ENCUESTA_MONGO",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "PUNTUACION_GENERAL",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "SCORE_ATENCION_MEDICA",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "TIEMPO_ESPERA_MINUTOS",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SCORE_TRATO_PERSONAL",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "SCORE_CONSULTA_DOCTOR",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "RESOLUCION_DUDAS_VAL",
+				"type": "bit"
+			},
+			{
+				"name": "CANTIDAD_ENCUESTAS",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "FECHA_CARGA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ID_DIMPATOLOGIA",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "FACT_SATISFACCION"
+		}
+	}
+}
