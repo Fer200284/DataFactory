@@ -5,8 +5,6 @@
 			{
 				"name": "DIM_TIEMPO",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -19,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SET LANGUAGE Spanish;\nSELECT DISTINCT\n    CAST(FechaHoraCita AS DATE) AS Fecha,\n    YEAR(FechaHoraCita) AS Anio,\n    MONTH(FechaHoraCita) AS Mes,\n    DATENAME(MONTH, FechaHoraCita) AS NombreMes,\n    DAY(FechaHoraCita) AS Dia,\n    DATENAME(WEEKDAY, FechaHoraCita) AS NombreDia,\n    DATEPART(WEEK, FechaHoraCita) AS Semana,\n    DATEPART(QUARTER, FechaHoraCita) AS Trimestre,\n    CASE\n        WHEN MONTH(FechaHoraCita) <= 6 THEN 1\n        ELSE 2\n    END AS Semestre\nFROM Citas",
+						"sqlReaderQuery": "SELECT DISTINCT\n       Fecha,\n       YEAR(Fecha) AS Anio,\n       MONTH(Fecha) AS Mes,\n       DATENAME(MONTH, Fecha) AS NombreMes,\n       DAY(Fecha) AS Dia,\n       DATENAME(WEEKDAY, Fecha) AS NombreDia,\n       DATEPART(WEEK, Fecha) AS Semana,\n       DATEPART(QUARTER, Fecha) AS Trimestre,\n       CASE\n           WHEN MONTH(Fecha) <= 6 THEN 1\n           ELSE 2\n       END AS Semestre\nFROM\n(\n    SELECT CAST(FechaHoraCita AS DATE) AS Fecha\n    FROM Citas\n\n    UNION\n\n    SELECT ID_FECHA\n    FROM STG_ENCUESTA_PACIENTE\n\n    UNION\n\n    SELECT ID_FECHA\n    FROM STG_ATENCIONES_MONGO\n) F\nORDER BY Fecha;",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},

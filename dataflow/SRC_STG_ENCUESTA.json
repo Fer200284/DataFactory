@@ -10,10 +10,21 @@
 						"type": "DatasetReference"
 					},
 					"name": "ENCUESTA"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_TIEMPO",
+						"type": "DatasetReference"
+					},
+					"name": "SRCDIMTIEMPO"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "DIMtiempo"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          ID_ENCUESTA as long,",
@@ -31,7 +42,27 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> ENCUESTA"
+				"     format: 'table') ~> ENCUESTA",
+				"source(output(",
+				"          IdDIMTIEMPO as integer,",
+				"          Fecha as date,",
+				"          Anio as integer,",
+				"          Mes as integer,",
+				"          NombreMes as string,",
+				"          Dia as integer,",
+				"          NombreDia as string,",
+				"          Semana as integer,",
+				"          Trimestre as integer,",
+				"          Semestre as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCDIMTIEMPO",
+				"ENCUESTA, SRCDIMTIEMPO lookup(ID_FECHA == Fecha,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> DIMtiempo"
 			]
 		}
 	}
