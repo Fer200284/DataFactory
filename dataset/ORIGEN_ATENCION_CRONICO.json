@@ -1,0 +1,97 @@
+{
+	"name": "ORIGEN_ATENCION_CRONICO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "FechaAtencion",
+				"type": "date"
+			},
+			{
+				"name": "Peso",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "Talla",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "PresionArterial Sitolica",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PresionArterial Diastolica",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FechaProximaCita",
+				"type": "date"
+			},
+			{
+				"name": "Asistio",
+				"type": "bit"
+			},
+			{
+				"name": "ConsultaEspecializada",
+				"type": "bit"
+			},
+			{
+				"name": "Observaciones",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FechaCreacion",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "IdMedico",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "IdPaciente_Patologia",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "FechaHoraLlega",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "FechaHoraInicio",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "FechaHoraFin",
+				"type": "datetimeoffset",
+				"scale": 7
+			},
+			{
+				"name": "IdCita",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Atencion_Cronico"
+		}
+	}
+}

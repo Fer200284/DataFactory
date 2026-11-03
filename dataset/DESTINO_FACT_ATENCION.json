@@ -1,0 +1,98 @@
+{
+	"name": "DESTINO_FACT_ATENCION",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_FACT_ATENCION",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_ATENCION_OLTP",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ID_DIMPACIENTE",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIMPaciente_Patologia",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIMMEDICO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "IdDIMTIEMPO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Peso",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "Talla",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "PresionSistolica",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PresionDiastolica",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Asistio",
+				"type": "bit"
+			},
+			{
+				"name": "ConsultaEspecializada",
+				"type": "bit"
+			},
+			{
+				"name": "TiempoEsperaMin",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TiempoAtencionMin",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "RecetoMedicamentoFlag",
+				"type": "bit"
+			},
+			{
+				"name": "SolicitoExamenFlag",
+				"type": "bit"
+			},
+			{
+				"name": "ID_DIMPATOLOGIA",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "FACT_AtencionCronico"
+		}
+	}
+}
