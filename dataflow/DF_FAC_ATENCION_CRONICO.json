@@ -1,0 +1,221 @@
+{
+	"name": "DF_FAC_ATENCION_CRONICO",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ORIGEN_ATENCION_CRONICO",
+						"type": "DatasetReference"
+					},
+					"name": "SRATENCIONCRONICO"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_PACIENTE_PATOLOGIA",
+						"type": "DatasetReference"
+					},
+					"name": "SRCDIMPACIENTEPATOLOGIA"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_PACIENTE",
+						"type": "DatasetReference"
+					},
+					"name": "SRCDIMPACIENTE"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_PATOLOGIA",
+						"type": "DatasetReference"
+					},
+					"name": "SRCPATOLOGIA"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_MEDICO",
+						"type": "DatasetReference"
+					},
+					"name": "SRCmedico"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_TIEMPO",
+						"type": "DatasetReference"
+					},
+					"name": "SRCtiempo"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DESRINO_FACT_ATENCION",
+						"type": "DatasetReference"
+					},
+					"name": "destinoFACTatencion"
+				}
+			],
+			"transformations": [
+				{
+					"name": "LKPPACIENTEPATOLOGIA"
+				},
+				{
+					"name": "LKPPACIENTE"
+				},
+				{
+					"name": "LKPpatologia"
+				},
+				{
+					"name": "LKPmedico"
+				},
+				{
+					"name": "LKPtiempo"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as long,",
+				"          FechaAtencion as date,",
+				"          Peso as decimal(5,2),",
+				"          Talla as decimal(5,2),",
+				"          {PresionArterial Sitolica} as string,",
+				"          {PresionArterial Diastolica} as string,",
+				"          FechaProximaCita as date,",
+				"          Asistio as boolean,",
+				"          ConsultaEspecializada as boolean,",
+				"          Observaciones as string,",
+				"          FechaCreacion as string,",
+				"          IdMedico as long,",
+				"          IdPaciente_Patologia as long,",
+				"          FechaHoraLlega as string,",
+				"          FechaHoraInicio as string,",
+				"          FechaHoraFin as string,",
+				"          IdCita as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRATENCIONCRONICO",
+				"source(output(",
+				"          ID_DIMPaciente_Patologia as integer,",
+				"          ID_PacientePatologia as long,",
+				"          ID_Paciente as long,",
+				"          ID_Patologia as long,",
+				"          NOMBRE_PATOLOGIA as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCDIMPACIENTEPATOLOGIA",
+				"source(output(",
+				"          ID_DIMPACIENTE as integer,",
+				"          ID_PACIENTE as long,",
+				"          NOMBRE_COMPLETO as string,",
+				"          FECHA_DE_NACIMIENTO as date,",
+				"          SEXO as string,",
+				"          BARRIO as string,",
+				"          IDSECTOR_OLTP as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCDIMPACIENTE",
+				"source(output(",
+				"          ID_DIMPATOLOGIA as integer,",
+				"          ID_PATOLOGIA_OLTP as long,",
+				"          NOMBRE_PATOLOGIA as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCPATOLOGIA",
+				"source(output(",
+				"          ID_DIMMEDICO as integer,",
+				"          ID_MEDICO_OLTP as long,",
+				"          NOMBRE_COMPLETO as string,",
+				"          ESPECIALIDAD as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCmedico",
+				"source(output(",
+				"          IdDIMTIEMPO as integer,",
+				"          Fecha as date,",
+				"          Anio as integer,",
+				"          Mes as integer,",
+				"          NombreMes as string,",
+				"          Dia as integer,",
+				"          NombreDia as string,",
+				"          Semana as integer,",
+				"          Trimestre as integer,",
+				"          Semestre as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCtiempo",
+				"SRATENCIONCRONICO, SRCDIMPACIENTEPATOLOGIA lookup(IdPaciente_Patologia == ID_PacientePatologia,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPPACIENTEPATOLOGIA",
+				"LKPPACIENTEPATOLOGIA, SRCDIMPACIENTE lookup(SRCDIMPACIENTEPATOLOGIA@ID_Paciente == SRCDIMPACIENTE@ID_PACIENTE,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPPACIENTE",
+				"LKPPACIENTE, SRCPATOLOGIA lookup(ID_Patologia == ID_PATOLOGIA_OLTP,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPpatologia",
+				"LKPpatologia, SRCmedico lookup(IdMedico == ID_MEDICO_OLTP,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPmedico",
+				"LKPmedico, SRCtiempo lookup(FechaAtencion == Fecha,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPtiempo",
+				"LKPtiempo sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_FACT_ATENCION as integer,",
+				"          ID_ATENCION_OLTP as long,",
+				"          ID_DIMPACIENTE as integer,",
+				"          ID_DIMPaciente_Patologia as integer,",
+				"          ID_DIMMEDICO as integer,",
+				"          IdDIMTIEMPO as integer,",
+				"          ID_DIMPATOLOGIA as integer,",
+				"          Peso as decimal(5,2),",
+				"          Talla as decimal(5,2),",
+				"          PresionSistolica as string,",
+				"          PresionDiastolica as string,",
+				"          Asistio as boolean,",
+				"          ConsultaEspecializada as boolean",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ID_ATENCION_OLTP = id,",
+				"          ID_DIMPACIENTE,",
+				"          ID_DIMPaciente_Patologia,",
+				"          ID_DIMMEDICO,",
+				"          IdDIMTIEMPO,",
+				"          ID_DIMPATOLOGIA,",
+				"          Peso,",
+				"          Talla,",
+				"          PresionSistolica = {PresionArterial Sitolica},",
+				"          PresionDiastolica = {PresionArterial Diastolica},",
+				"          Asistio,",
+				"          ConsultaEspecializada",
+				"     )) ~> destinoFACTatencion"
+			]
+		}
+	}
+}
