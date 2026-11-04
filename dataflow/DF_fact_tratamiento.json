@@ -81,7 +81,7 @@
 						"referenceName": "DESTINO_FACT_TRATAMIENTO",
 						"type": "DatasetReference"
 					},
-					"name": "sinkFactTratemiento"
+					"name": "sinkFACTtratamiento"
 				}
 			],
 			"transformations": [
@@ -108,6 +108,9 @@
 				},
 				{
 					"name": "LKPpatologia"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -271,7 +274,13 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> LKPpatologia",
-				"LKPTIEMPO sink(allowSchemaDrift: true,",
+				"LKPTIEMPO filter(!isNull(IdTratamiento)",
+				"&& !isNull(ID_DIMPATOLOGIA)",
+				"&& !isNull(ID_DIMPACIENTE)",
+				"&& !isNull(ID_DIM_MEDICAMENTO)",
+				"&& !isNull(ID_DIMMEDICO)",
+				"&& !isNull(IdDIMTIEMPO)) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          ID_FACT_TRATAMIENTO as integer,",
@@ -292,16 +301,14 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          each(match(/* All input columns */ true()),",
-				"               /* Input name */ $$ = $$),",
 				"          ID_TRATAMIENTO_OLTP = IdTratamiento,",
 				"          IdDIMTIEMPO,",
 				"          ID_DIMPACIENTE,",
-				"          ID_DIMMEDICO,",
 				"          ID_DIM_MEDICAMENTO,",
+				"          ID_DIMMEDICO,",
 				"          CANTIDAD_ENTREGADA = CantidadEntregada,",
 				"          ID_DIMPATOLOGIA",
-				"     )) ~> sinkFactTratemiento"
+				"     )) ~> sinkFACTtratamiento"
 			]
 		}
 	}

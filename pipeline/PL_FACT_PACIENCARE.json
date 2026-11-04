@@ -97,6 +97,8 @@
 			{
 				"name": "DF_tratamiento",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF_ATENCION_CRONICO",

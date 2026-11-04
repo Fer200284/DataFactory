@@ -252,14 +252,14 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          each(match(/* All input columns */ true()),",
-				"               /* Input name */ $$ = $$),",
 				"          ID_SOLICITUD_EXAMEN_OLTP = Id_Solicitud_Examen,",
 				"          IdDIMTIEMPO,",
 				"          ID_DIMPACIENTE,",
 				"          ID_DIMMEDICO,",
 				"          ID_DIMEXAMENES,",
-				"          VALOR_RESULTADO = ValorResultado",
+				"          VALOR_RESULTADO = ValorResultado,",
+				"          each(match(/* All input columns */true()),",
+				"               /* Input name */$$ = $$)",
 				"     )) ~> DESTINOFACRE"
 			]
 		}
