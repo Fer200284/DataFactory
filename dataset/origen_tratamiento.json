@@ -1,0 +1,31 @@
+{
+	"name": "origen_tratamiento",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Observaciones",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IdAtencionCronico",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Tratamiento"
+		}
+	}
+}

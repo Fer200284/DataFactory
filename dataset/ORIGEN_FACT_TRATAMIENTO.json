@@ -1,0 +1,41 @@
+{
+	"name": "ORIGEN_FACT_TRATAMIENTO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "CantidadEntregada",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Indicacion",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IdMedicamento",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "IdTratamiento",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Detalle_Tratamiento"
+		}
+	}
+}

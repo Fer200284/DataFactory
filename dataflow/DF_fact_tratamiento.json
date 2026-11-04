@@ -1,0 +1,284 @@
+{
+	"name": "DF_fact_tratamiento",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ORIGEN_FACT_TRATAMIENTO",
+						"type": "DatasetReference"
+					},
+					"name": "srcTRATAMIENTO"
+				},
+				{
+					"dataset": {
+						"referenceName": "origen_tratamiento",
+						"type": "DatasetReference"
+					},
+					"name": "SRCtratamientoorigen"
+				},
+				{
+					"dataset": {
+						"referenceName": "ORIGEN_ATENCION_CRONICO",
+						"type": "DatasetReference"
+					},
+					"name": "SRCatencioncronico"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_PACIENTE_PATOLOGIA",
+						"type": "DatasetReference"
+					},
+					"name": "SRpacientePatologia"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_PACIENTE",
+						"type": "DatasetReference"
+					},
+					"name": "srcPACIENTE"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_MEDICAMENTO",
+						"type": "DatasetReference"
+					},
+					"name": "SRCmedicamento"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_MEDICO",
+						"type": "DatasetReference"
+					},
+					"name": "SRCmedico"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_TIEMPO",
+						"type": "DatasetReference"
+					},
+					"name": "srcTIEMPO"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_FACT_TRATAMIENTO",
+						"type": "DatasetReference"
+					},
+					"name": "SRCdestinoFACTRATAMIENTO"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DESTINO_FACT_TRATAMIENTO",
+						"type": "DatasetReference"
+					},
+					"name": "sinkFactTratemiento"
+				}
+			],
+			"transformations": [
+				{
+					"name": "LKPtratamiento"
+				},
+				{
+					"name": "LKPatencion"
+				},
+				{
+					"name": "LKPpacientePatologia"
+				},
+				{
+					"name": "LKPpaciente"
+				},
+				{
+					"name": "LKPmedicamento"
+				},
+				{
+					"name": "LKPmedico"
+				},
+				{
+					"name": "LKPTIEMPO"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as long,",
+				"          CantidadEntregada as integer,",
+				"          Indicacion as string,",
+				"          IdMedicamento as long,",
+				"          IdTratamiento as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> srcTRATAMIENTO",
+				"source(output(",
+				"          id as long,",
+				"          Observaciones as string,",
+				"          IdAtencionCronico as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCtratamientoorigen",
+				"source(output(",
+				"          id as long,",
+				"          FechaAtencion as date,",
+				"          Peso as decimal(5,2),",
+				"          Talla as decimal(5,2),",
+				"          {PresionArterial Sitolica} as string,",
+				"          {PresionArterial Diastolica} as string,",
+				"          FechaProximaCita as date,",
+				"          Asistio as boolean,",
+				"          ConsultaEspecializada as boolean,",
+				"          Observaciones as string,",
+				"          FechaCreacion as string,",
+				"          IdMedico as long,",
+				"          IdPaciente_Patologia as long,",
+				"          FechaHoraLlega as string,",
+				"          FechaHoraInicio as string,",
+				"          FechaHoraFin as string,",
+				"          IdCita as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCatencioncronico",
+				"source(output(",
+				"          ID_DIMPaciente_Patologia as integer,",
+				"          ID_PacientePatologia as long,",
+				"          ID_Paciente as long,",
+				"          ID_Patologia as long,",
+				"          NOMBRE_PATOLOGIA as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRpacientePatologia",
+				"source(output(",
+				"          ID_DIMPACIENTE as integer,",
+				"          ID_PACIENTE as long,",
+				"          NOMBRE_COMPLETO as string,",
+				"          FECHA_DE_NACIMIENTO as date,",
+				"          SEXO as string,",
+				"          BARRIO as string,",
+				"          IDSECTOR_OLTP as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> srcPACIENTE",
+				"source(output(",
+				"          ID_DIM_MEDICAMENTO as integer,",
+				"          ID_MEDICAMENTO as long,",
+				"          NOMBRE_MEDICAMENTO as string,",
+				"          PRESENTACION as string,",
+				"          CONCENTRACION as string,",
+				"          CATEGORIA as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCmedicamento",
+				"source(output(",
+				"          ID_DIMMEDICO as integer,",
+				"          ID_MEDICO_OLTP as long,",
+				"          NOMBRE_COMPLETO as string,",
+				"          ESPECIALIDAD as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCmedico",
+				"source(output(",
+				"          IdDIMTIEMPO as integer,",
+				"          Fecha as date,",
+				"          Anio as integer,",
+				"          Mes as integer,",
+				"          NombreMes as string,",
+				"          Dia as integer,",
+				"          NombreDia as string,",
+				"          Semana as integer,",
+				"          Trimestre as integer,",
+				"          Semestre as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> srcTIEMPO",
+				"source(output(",
+				"          ID_FACT_TRATAMIENTO as integer,",
+				"          ID_TRATAMIENTO_OLTP as long,",
+				"          IdDIMTIEMPO as integer,",
+				"          ID_DIMPACIENTE as integer,",
+				"          ID_DIM_MEDICAMENTO as integer,",
+				"          ID_DIMMEDICO as integer,",
+				"          CANTIDAD_ENTREGADA as integer,",
+				"          ID_DIMPATOLOGIA as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCdestinoFACTRATAMIENTO",
+				"srcTRATAMIENTO, SRCtratamientoorigen lookup(IdTratamiento == SRCtratamientoorigen@id,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPtratamiento",
+				"LKPtratamiento, SRCatencioncronico lookup(IdAtencionCronico == SRCatencioncronico@id,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPatencion",
+				"LKPatencion, SRpacientePatologia lookup(IdPaciente_Patologia == ID_PacientePatologia,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPpacientePatologia",
+				"LKPpacientePatologia, srcPACIENTE lookup(IdPaciente_Patologia == srcPACIENTE@ID_PACIENTE,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPpaciente",
+				"LKPpaciente, SRCmedicamento lookup(IdMedicamento == ID_MEDICAMENTO,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPmedicamento",
+				"LKPmedicamento, SRCmedico lookup(IdMedico == ID_MEDICO_OLTP,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPmedico",
+				"LKPmedico, srcTIEMPO lookup(FechaAtencion == Fecha,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPTIEMPO",
+				"LKPTIEMPO sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_FACT_TRATAMIENTO as integer,",
+				"          ID_TRATAMIENTO_OLTP as long,",
+				"          IdDIMTIEMPO as integer,",
+				"          ID_DIMPACIENTE as integer,",
+				"          ID_DIM_MEDICAMENTO as integer,",
+				"          ID_DIMMEDICO as integer,",
+				"          CANTIDAD_ENTREGADA as integer,",
+				"          ID_DIMPATOLOGIA as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          each(match(/* All input columns */ true()),",
+				"               /* Input name */ $$ = $$),",
+				"          ID_TRATAMIENTO_OLTP = IdTratamiento,",
+				"          IdDIMTIEMPO,",
+				"          ID_DIMPACIENTE,",
+				"          ID_DIMMEDICO,",
+				"          ID_DIM_MEDICAMENTO,",
+				"          CANTIDAD_ENTREGADA = CantidadEntregada",
+				"     )) ~> sinkFactTratemiento"
+			]
+		}
+	}
+}

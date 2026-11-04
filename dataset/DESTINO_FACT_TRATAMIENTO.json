@@ -1,0 +1,57 @@
+{
+	"name": "DESTINO_FACT_TRATAMIENTO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_FACT_TRATAMIENTO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_TRATAMIENTO_OLTP",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "IdDIMTIEMPO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIMPACIENTE",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIM_MEDICAMENTO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIMMEDICO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CANTIDAD_ENTREGADA",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIMPATOLOGIA",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "FACT_TRATAMIENTO"
+		}
+	}
+}
