@@ -66,6 +66,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "SRCdestinoFACTRATAMIENTO"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_PATOLOGIA",
+						"type": "DatasetReference"
+					},
+					"name": "srcPATOLOGIA"
 				}
 			],
 			"sinks": [
@@ -98,6 +105,9 @@
 				},
 				{
 					"name": "LKPTIEMPO"
+				},
+				{
+					"name": "LKPpatologia"
 				}
 			],
 			"scriptLines": [
@@ -220,6 +230,15 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> SRCdestinoFACTRATAMIENTO",
+				"source(output(",
+				"          ID_DIMPATOLOGIA as integer,",
+				"          ID_PATOLOGIA_OLTP as long,",
+				"          NOMBRE_PATOLOGIA as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> srcPATOLOGIA",
 				"srcTRATAMIENTO, SRCtratamientoorigen lookup(IdTratamiento == SRCtratamientoorigen@id,",
 				"     multiple: false,",
 				"     pickup: 'any',",
@@ -232,7 +251,7 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> LKPpacientePatologia",
-				"LKPpacientePatologia, srcPACIENTE lookup(IdPaciente_Patologia == srcPACIENTE@ID_PACIENTE,",
+				"LKPpatologia, srcPACIENTE lookup(IdPaciente_Patologia == srcPACIENTE@ID_PACIENTE,",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> LKPpaciente",
@@ -248,6 +267,10 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> LKPTIEMPO",
+				"LKPpacientePatologia, srcPATOLOGIA lookup(ID_Patologia == ID_PATOLOGIA_OLTP,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPpatologia",
 				"LKPTIEMPO sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -276,7 +299,8 @@
 				"          ID_DIMPACIENTE,",
 				"          ID_DIMMEDICO,",
 				"          ID_DIM_MEDICAMENTO,",
-				"          CANTIDAD_ENTREGADA = CantidadEntregada",
+				"          CANTIDAD_ENTREGADA = CantidadEntregada,",
+				"          ID_DIMPATOLOGIA",
 				"     )) ~> sinkFactTratemiento"
 			]
 		}
