@@ -1,0 +1,14 @@
+{
+	"name": "DF_FACT_ATENCION_MONGODB",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				""
+			]
+		}
+	}
+}

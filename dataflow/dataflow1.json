@@ -1,0 +1,201 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "STG_ATENCIONES_MONGODB",
+						"type": "DatasetReference"
+					},
+					"name": "SRCAtencionesMongodb"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_TIEMPO",
+						"type": "DatasetReference"
+					},
+					"name": "SRCTIEMPO"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_PACIENTE",
+						"type": "DatasetReference"
+					},
+					"name": "SRCPaciente"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_MEDICO",
+						"type": "DatasetReference"
+					},
+					"name": "SRCmedio"
+				},
+				{
+					"dataset": {
+						"referenceName": "DESTINO_DIM_PATOLOGIA",
+						"type": "DatasetReference"
+					},
+					"name": "SRCpatologia"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "FACT_ATENCIONES_DESTINO_MONGODB",
+						"type": "DatasetReference"
+					},
+					"name": "sinkFACAteniconMONGDB"
+				}
+			],
+			"transformations": [
+				{
+					"name": "LKPTIEMPO"
+				},
+				{
+					"name": "LKPPaciente"
+				},
+				{
+					"name": "LKPMedico"
+				},
+				{
+					"name": "LKPpatologia"
+				},
+				{
+					"name": "derivedColumn"
+				},
+				{
+					"name": "FILTRO"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ID_ATENCION as long,",
+				"          ID_FECHA as date,",
+				"          ID_PACIENTE as long,",
+				"          ID_MEDICO as long,",
+				"          ID_PATOLOGIA as long,",
+				"          ASISTIO_VAL as integer,",
+				"          DURACION_CONSULTA_MINUTOS as integer,",
+				"          TIEMPO_ESPERA_REAL_MINUTOS as integer,",
+				"          RECETO_MEDICAMENTO_FLAG as boolean,",
+				"          SOLICITO_EXAMEN_FLAG as boolean,",
+				"          FECHA_HORA_LLEGADA as timestamp,",
+				"          FECHA_HORA_INICIO_CONSULTA as timestamp,",
+				"          FECHA_HORA_FIN_CONSULTA as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCAtencionesMongodb",
+				"source(output(",
+				"          IdDIMTIEMPO as integer,",
+				"          Fecha as date,",
+				"          Anio as integer,",
+				"          Mes as integer,",
+				"          NombreMes as string,",
+				"          Dia as integer,",
+				"          NombreDia as string,",
+				"          Semana as integer,",
+				"          Trimestre as integer,",
+				"          Semestre as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCTIEMPO",
+				"source(output(",
+				"          ID_DIMPACIENTE as integer,",
+				"          ID_PACIENTE as long,",
+				"          NOMBRE_COMPLETO as string,",
+				"          FECHA_DE_NACIMIENTO as date,",
+				"          SEXO as string,",
+				"          BARRIO as string,",
+				"          IDSECTOR_OLTP as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCPaciente",
+				"source(output(",
+				"          ID_DIMMEDICO as integer,",
+				"          ID_MEDICO_OLTP as long,",
+				"          NOMBRE_COMPLETO as string,",
+				"          ESPECIALIDAD as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCmedio",
+				"source(output(",
+				"          ID_DIMPATOLOGIA as integer,",
+				"          ID_PATOLOGIA_OLTP as long,",
+				"          NOMBRE_PATOLOGIA as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRCpatologia",
+				"SRCAtencionesMongodb, SRCTIEMPO lookup(ID_FECHA == Fecha,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPTIEMPO",
+				"LKPTIEMPO, SRCPaciente lookup(SRCAtencionesMongodb@ID_PACIENTE == SRCPaciente@ID_PACIENTE,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPPaciente",
+				"LKPPaciente, SRCmedio lookup(ID_MEDICO == ID_MEDICO_OLTP,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPMedico",
+				"LKPMedico, SRCpatologia lookup(ID_PATOLOGIA == ID_PATOLOGIA_OLTP,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPpatologia",
+				"LKPpatologia derive(ASISTIO_VAL = iif(ASISTIO_VAL == 1, true(), false())) ~> derivedColumn",
+				"derivedColumn filter(!isNull(ID_ATENCION)",
+				"&& !isNull(IdDIMTIEMPO)",
+				"&& !isNull(ID_DIMPACIENTE)",
+				"&& !isNull(ID_DIMMEDICO)",
+				"&& !isNull(ID_DIMPATOLOGIA)",
+				"&& !isNull(ASISTIO_VAL)) ~> FILTRO",
+				"FILTRO sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_FACT_MONGO as integer,",
+				"          ID_ATENCION_OLTP as long,",
+				"          IdDIMTIEMPO as integer,",
+				"          ID_DIMPACIENTE as integer,",
+				"          ID_DIMMEDICO as integer,",
+				"          ID_DIMPATOLOGIA as integer,",
+				"          ASISTIO_VAL as boolean,",
+				"          DURACION_CONSULTA_MINUTOS as integer,",
+				"          TIEMPO_ESPERA_REAL_MINUTOS as integer,",
+				"          RECETO_MEDICAMENTO_FLAG as boolean,",
+				"          SOLICITO_EXAMEN_FLAG as boolean",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ID_ATENCION_OLTP = ID_ATENCION,",
+				"          IdDIMTIEMPO,",
+				"          ID_DIMPACIENTE,",
+				"          ID_DIMMEDICO,",
+				"          ID_DIMPATOLOGIA,",
+				"          DURACION_CONSULTA_MINUTOS,",
+				"          TIEMPO_ESPERA_REAL_MINUTOS,",
+				"          RECETO_MEDICAMENTO_FLAG,",
+				"          SOLICITO_EXAMEN_FLAG,",
+				"          ASISTIO_VAL",
+				"     )) ~> sinkFACAteniconMONGDB"
+			]
+		}
+	}
+}

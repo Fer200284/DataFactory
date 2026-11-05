@@ -1,0 +1,69 @@
+{
+	"name": "FACT_ATENCIONES_DESTINO_MONGODB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_FACT_MONGO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_ATENCION_OLTP",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "IdDIMTIEMPO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIMPACIENTE",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIMMEDICO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_DIMPATOLOGIA",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ASISTIO_VAL",
+				"type": "bit"
+			},
+			{
+				"name": "DURACION_CONSULTA_MINUTOS",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TIEMPO_ESPERA_REAL_MINUTOS",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "RECETO_MEDICAMENTO_FLAG",
+				"type": "bit"
+			},
+			{
+				"name": "SOLICITO_EXAMEN_FLAG",
+				"type": "bit"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "FACT_AtencionMongo"
+		}
+	}
+}

@@ -1,0 +1,82 @@
+{
+	"name": "STG_ATENCIONES_MONGODB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_ATENCION",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ID_FECHA",
+				"type": "date"
+			},
+			{
+				"name": "ID_PACIENTE",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ID_MEDICO",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ID_PATOLOGIA",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ASISTIO_VAL",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DURACION_CONSULTA_MINUTOS",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TIEMPO_ESPERA_REAL_MINUTOS",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "RECETO_MEDICAMENTO_FLAG",
+				"type": "bit"
+			},
+			{
+				"name": "SOLICITO_EXAMEN_FLAG",
+				"type": "bit"
+			},
+			{
+				"name": "FECHA_HORA_LLEGADA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "FECHA_HORA_INICIO_CONSULTA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "FECHA_HORA_FIN_CONSULTA",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "STG_ATENCIONES_MONGO"
+		}
+	}
+}

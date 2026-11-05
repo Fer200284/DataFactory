@@ -128,8 +128,10 @@
 				}
 			},
 			{
-				"name": "Data flow1",
+				"name": "FACT_atenicon_OrigenMongoDB",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "DF_tratamiento",
@@ -147,6 +149,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow1",
+						"type": "DataFlowReference"
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
