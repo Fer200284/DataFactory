@@ -6,10 +6,10 @@
 			"editable": true
 		}
 	},
-	"location": "northcentralus",
+	"location": "eastus",
 	"identity": {
 		"type": "SystemAssigned",
-		"principalId": "d2d07936-d598-4e23-807c-820321c8dcbb",
+		"principalId": "cc2f6c22-f929-4edc-9f30-1d70ef9838e5",
 		"tenantId": "e47646fe-da27-4518-8436-5f8b158ba127"
 	}
 }
