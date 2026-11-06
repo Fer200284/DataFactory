@@ -1180,6 +1180,8 @@
 			{
 				"name": "cargarFACTatencionMONGODB",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "cargarFactTraamiento",
