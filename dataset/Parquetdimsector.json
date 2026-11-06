@@ -1,0 +1,21 @@
+{
+	"name": "Parquetdimsector",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_storage_paciencare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "DIM_Sector.parquet",
+				"folderPath": "dw",
+				"fileSystem": "datosprocesados"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
