@@ -1,0 +1,21 @@
+{
+	"name": "ParquetDIMTIEMPO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DIMTIEMPO",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "DIM_TIEMPO.PARQUET",
+				"folderPath": "dw",
+				"container": "datosprocesados"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

@@ -1,0 +1,64 @@
+{
+	"name": "DS_DIM_TIEMPO",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "IdDIMTIEMPO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Fecha",
+				"type": "date"
+			},
+			{
+				"name": "Anio",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Mes",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "NombreMes",
+				"type": "varchar"
+			},
+			{
+				"name": "Dia",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "NombreDia",
+				"type": "varchar"
+			},
+			{
+				"name": "Semana",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Trimestre",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Semestre",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_TIEMPO"
+		}
+	}
+}
