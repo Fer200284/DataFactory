@@ -1,0 +1,21 @@
+{
+	"name": "ParquetFACTSASTIFACCION",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_storage_paciencare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "FACT_SASTIFACCION.parquet",
+				"folderPath": "dw",
+				"fileSystem": "datosprocesados"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"name": "ParquetFACRE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_storage_paciencare",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "FACT_RESULTADOS_examenes.parquer",
+				"folderPath": "dw",
+				"fileSystem": "datosprocesados"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
