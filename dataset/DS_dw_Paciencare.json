@@ -1,0 +1,48 @@
+{
+	"name": "DS_dw_Paciencare",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_paciencare_dw",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_DIMPACIENTE",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID_PACIENTE",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "NOMBRE_COMPLETO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FECHA_DE_NACIMIENTO",
+				"type": "date"
+			},
+			{
+				"name": "SEXO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BARRIO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IDSECTOR_OLTP",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_PACIENTE"
+		}
+	}
+}
