@@ -6,10 +6,10 @@
 			"editable": true
 		}
 	},
-	"location": "eastus",
+	"location": "centralus",
 	"identity": {
 		"type": "SystemAssigned",
-		"principalId": "cc2f6c22-f929-4edc-9f30-1d70ef9838e5",
+		"principalId": "10e17827-e7ce-41a0-951e-9e85a70dd4ee",
 		"tenantId": "e47646fe-da27-4518-8436-5f8b158ba127"
 	}
 }
