@@ -1,0 +1,15 @@
+{
+	"name": "paciencare",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "dd5a75e5-6ad9-4e5d-9a5c-50a96ec396d5",
+		"tenantId": "e47646fe-da27-4518-8436-5f8b158ba127"
+	}
+}
