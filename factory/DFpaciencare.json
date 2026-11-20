@@ -3,13 +3,14 @@
 	"properties": {
 		"trustModeClaimForMi": {
 			"value": "Disabled",
-			"editable": true
+			"editable": true,
+			"isExplicitlySet": false
 		}
 	},
-	"location": "centralus",
+	"location": "mexicocentral",
 	"identity": {
 		"type": "SystemAssigned",
-		"principalId": "506a5a9c-04ed-4e29-8d8a-93ffff1fd448",
+		"principalId": "1127b108-343b-4ddd-9c05-238096415707",
 		"tenantId": "e47646fe-da27-4518-8436-5f8b158ba127"
 	}
 }
