@@ -1,0 +1,34 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlDim_paciente_patologia_origen",
+						"type": "DatasetReference"
+					},
+					"name": "origenPP"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          id as long,",
+				"          fecha_de_Diagnostico as date,",
+				"          Estado as boolean,",
+				"          Observaciones as string,",
+				"          Idpaciente as long,",
+				"          IDPatologiaCRonica as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'select id ,idpaciente, IDPatologiaCRonica from DIM_PATOLOGIA_CRONICA',",
+				"     format: 'query') ~> origenPP"
+			]
+		}
+	}
+}
