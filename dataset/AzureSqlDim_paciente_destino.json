@@ -1,0 +1,43 @@
+{
+	"name": "AzureSqlDim_paciente_destino",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "IdpacienteDW",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "NOMBRE_COMPLETO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Barrio",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fecha_de_nacimiento",
+				"type": "date"
+			},
+			{
+				"name": "celular",
+				"type": "nvarchar"
+			},
+			{
+				"name": "idpacienteOLTP",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Dim_Paciente"
+		}
+	}
+}

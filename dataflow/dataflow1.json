@@ -10,10 +10,21 @@
 						"type": "DatasetReference"
 					},
 					"name": "origenPP"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlDim_paciente_destino",
+						"type": "DatasetReference"
+					},
+					"name": "srpaciente"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "dimPaciente"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          id as long,",
@@ -27,7 +38,23 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     query: 'select id ,idpaciente, IDPatologiaCRonica from DIM_PATOLOGIA_CRONICA',",
-				"     format: 'query') ~> origenPP"
+				"     format: 'query') ~> origenPP",
+				"source(output(",
+				"          IdpacienteDW as long,",
+				"          NOMBRE_COMPLETO as string,",
+				"          Barrio as string,",
+				"          fecha_de_nacimiento as date,",
+				"          celular as string,",
+				"          idpacienteOLTP as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> srpaciente",
+				"origenPP, srpaciente lookup(id == IdpacienteDW,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> dimPaciente"
 			]
 		}
 	}
