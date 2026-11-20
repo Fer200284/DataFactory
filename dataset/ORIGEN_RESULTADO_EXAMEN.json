@@ -1,10 +1,6 @@
 {
 	"name": "ORIGEN_RESULTADO_EXAMEN",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "LS_paciencare_OLTP",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [

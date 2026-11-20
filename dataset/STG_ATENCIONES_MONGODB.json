@@ -1,10 +1,6 @@
 {
 	"name": "STG_ATENCIONES_MONGODB",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "LS_paciencare_dw",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [

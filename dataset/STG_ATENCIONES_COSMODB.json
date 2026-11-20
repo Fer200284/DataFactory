@@ -1,10 +1,6 @@
 {
 	"name": "STG_ATENCIONES_COSMODB",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "origen_cosmongodb",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "CosmosDbMongoDbApiCollection",
 		"schema": [],

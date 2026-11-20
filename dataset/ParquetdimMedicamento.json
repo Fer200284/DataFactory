@@ -1,10 +1,6 @@
 {
 	"name": "ParquetdimMedicamento",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "LS_storage_paciencare",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {

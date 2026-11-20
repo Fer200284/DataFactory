@@ -1,10 +1,6 @@
 {
 	"name": "FACT_SASTIFACCION_DESTINO",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "LS_paciencare_dw",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [

@@ -1,10 +1,6 @@
 {
 	"name": "ORIGEN_STG_PACIENTE_ENCUESTA",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "origen_cosmongodb",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "CosmosDbMongoDbApiCollection",
 		"schema": [],
