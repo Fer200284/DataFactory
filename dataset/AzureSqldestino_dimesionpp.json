@@ -1,0 +1,37 @@
+{
+	"name": "AzureSqldestino_dimesionpp",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID_DIM_P_P",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "IdpacienteDW",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ID_DM_paciente",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ID_OLTP",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIM_PACIETE_PATOLOGIA"
+		}
+	}
+}

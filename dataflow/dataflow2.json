@@ -1,0 +1,68 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlDim_paciente_patologia_origen",
+						"type": "DatasetReference"
+					},
+					"name": "SRPACIENTEPATOLOGIA"
+				},
+				{
+					"dataset": {
+						"referenceName": "Dim_paciente_origen",
+						"type": "DatasetReference"
+					},
+					"name": "SRPACIENTE",
+					"description": "Agregar conjunto de datos de origen"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "LKPACIENTE"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as long,",
+				"          fecha_de_Diagnostico as date,",
+				"          Estado as boolean,",
+				"          Observaciones as string,",
+				"          Idpaciente as long,",
+				"          IDPatologiaCRonica as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'select id,idpaciente,IDPatologiaCRonica from Paciente_Patologia',",
+				"     format: 'query') ~> SRPACIENTEPATOLOGIA",
+				"source(output(",
+				"          id as long,",
+				"          Nombre as string,",
+				"          Apellidos as string,",
+				"          sexo as string,",
+				"          Fecha_de_Nacimiento as date,",
+				"          celular as string,",
+				"          Cedula as string,",
+				"          Direccion as string,",
+				"          Barrio as string,",
+				"          FechaCreacion as string,",
+				"          Estado as boolean,",
+				"          IdSector as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SRPACIENTE",
+				"SRPACIENTEPATOLOGIA, SRPACIENTE lookup(SRPACIENTEPATOLOGIA@id == SRPACIENTE@id,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LKPACIENTE"
+			]
+		}
+	}
+}

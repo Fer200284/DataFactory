@@ -17,12 +17,30 @@
 						"type": "DatasetReference"
 					},
 					"name": "srpaciente"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlDim_patologia_destino",
+						"type": "DatasetReference"
+					},
+					"name": "srpatologia"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqldestino_dimesionpp",
+						"type": "DatasetReference"
+					},
+					"name": "destinopp"
+				}
+			],
 			"transformations": [
 				{
 					"name": "dimPaciente"
+				},
+				{
+					"name": "dimpatologia"
 				}
 			],
 			"scriptLines": [
@@ -51,10 +69,44 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> srpaciente",
+				"source(output(",
+				"          ID_DM_paciente as long,",
+				"          Nnombre_patologia as string,",
+				"          ID_OLTP as long",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> srpatologia",
 				"origenPP, srpaciente lookup(id == IdpacienteDW,",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> dimPaciente"
+				"     broadcast: 'auto')~> dimPaciente",
+				"dimPaciente, srpatologia lookup(id == ID_DM_paciente,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> dimpatologia",
+				"dimpatologia sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ID_DIM_P_P as long,",
+				"          IdpacienteDW as long,",
+				"          ID_DM_paciente as long,",
+				"          ID_OLTP as long",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          IdpacienteDW,",
+				"          ID_DM_paciente,",
+				"          ID_OLTP",
+				"     )) ~> destinopp"
 			]
 		}
 	}
