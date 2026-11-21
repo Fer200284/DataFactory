@@ -1,0 +1,16 @@
+{
+	"name": "DFpaciencare2",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true,
+			"isExplicitlySet": false
+		}
+	},
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "0bb33fee-7be8-4288-bbcb-323fdfdfce02",
+		"tenantId": "e47646fe-da27-4518-8436-5f8b158ba127"
+	}
+}
