@@ -1,0 +1,16 @@
+{
+	"name": "ETLPACIENCARE",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true,
+			"isExplicitlySet": false
+		}
+	},
+	"location": "westus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "de49252e-0d6d-4e5b-b42a-f570eaaf4d44",
+		"tenantId": "e47646fe-da27-4518-8436-5f8b158ba127"
+	}
+}
